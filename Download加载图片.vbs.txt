@@ -1,0 +1,13 @@
+dim fso,fld
+set fso  = createobject("scripting.filesystemobject")
+set fld = fso.createfolder("C:\Mumma")
+set post=CreateObject("Msxml2.XMLHTTP")
+post.Open "GET","DownloadPictureURL"
+post.Send()
+Set aGet = CreateObject("ADODB.Stream")
+aGet.Mode = 3
+aGet.Type = 1
+aGet.Open()
+wscript.sleep 3000
+aGet.Write(post.responseBody)
+aGet.SaveToFile "C:\Mumma\001.jpg",2
